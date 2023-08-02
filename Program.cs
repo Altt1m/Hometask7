@@ -128,6 +128,30 @@ namespace Hometask7
             Console.WriteLine($"Minimal value in arr1 = {minValue}");
             Console.WriteLine($"Coordinates of the minimum element in arr1: [{minIndexRow}, {minIndexCol}]");
 
+            // Task 5
+            /*Знайти індекси першого входження максимального елемента. Виведіть два числа: номер рядка і номер стовпця, 
+            який містить найбільший елемент двовимірного масиву. Якщо таких елементів кілька, то відображається той,
+            у якого номер нижнього рядка, а якщо номери рядків рівні, то виводиться той, у якого номер нижнього стовпця.*/
+            maxValue = arr1[0, 0]; maxIndexRow = 0; maxIndexCol = 0;
+            for (int i = 0; i < arr1.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr1.GetLength(1); j++)
+                {
+                    if ((arr1[i, j] > maxValue))
+                    {
+                        maxValue = arr1[i, j];
+                        maxIndexRow = i;
+                        maxIndexCol = j;
+                    }
+                    else if (arr1[i,j] == maxValue && i > maxIndexRow || arr1[i, j] == maxValue && i == maxIndexRow && j < maxIndexCol)
+                    {
+                        maxIndexRow = i;
+                        maxIndexCol = j;
+                    }
+                }
+            }
+            Console.WriteLine($"[{maxIndexRow}, {maxIndexCol}]");
+
 
         }
 
@@ -150,5 +174,8 @@ namespace Hometask7
                 Console.WriteLine();
             }
         }
+
+
+
     }
 }
