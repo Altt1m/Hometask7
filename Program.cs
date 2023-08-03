@@ -252,6 +252,10 @@ namespace Hometask7
                 }
             }
             PrintArray(arr4);
+            Console.WriteLine();
+
+            int[,] arr4_rotated = RotateClockwise(arr4);
+            PrintArray(arr4_rotated);
 
 
         }
@@ -307,6 +311,22 @@ namespace Hometask7
             array[row2, col2] = temp;
         }
 
+        static int[,] RotateClockwise(int[,] array)
+        {
+            int rows = array.GetLength(0);
+            int columns = array.GetLength(1);
 
+            int[,] rotatedArray = new int[columns, rows];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    rotatedArray[j, rows - 1 - i] = array[i, j];
+                }
+            }
+
+            return rotatedArray;
+        }
     }
 }
