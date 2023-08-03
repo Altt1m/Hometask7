@@ -93,7 +93,7 @@ namespace Hometask7
                         maxIndexRow = i;
                         maxIndexCol = j;
                     }
-                    else if (arr1[i, j] == maxValue && (i > maxIndexRow || (i == maxIndexRow && j > maxIndexCol)))
+                    else if (arr1[i, j] == maxValue && (i < maxIndexRow || (i == maxIndexRow && j < maxIndexCol)))
                     {
                         maxIndexRow = i;
                         maxIndexCol = j;
@@ -118,7 +118,7 @@ namespace Hometask7
                         minIndexRow = i;
                         minIndexCol = j;
                     }
-                    else if (arr1[i, j] == minValue && (i < minIndexRow || (i == minIndexRow && j < minIndexCol)))
+                    else if (arr1[i, j] == minValue && (i > minIndexRow || (i == minIndexRow && j > minIndexCol)))
                     {
                         minIndexRow = i;
                         minIndexCol = j;
@@ -144,13 +144,114 @@ namespace Hometask7
                         maxIndexCol = j;
                     }
                     else if (arr1[i,j] == maxValue && i > maxIndexRow || arr1[i, j] == maxValue && i == maxIndexRow && j < maxIndexCol)
-                    {
+                    { // якщо треба стовпець праворуч, то треба змінити j < maxIndexCol на j > maxIndexCol.
                         maxIndexRow = i;
                         maxIndexCol = j;
                     }
                 }
             }
-            Console.WriteLine($"[{maxIndexRow}, {maxIndexCol}]");
+            Console.WriteLine($"\nYour coordinates are: [{maxIndexRow}, {maxIndexCol}].\n");
+
+            // Task 6
+            /*Задається непарне число n. Створіть двовимірний масив з n x n елементів, 
+             *заповнивши його символами "." (Кожен елемент масиву є односимвольним рядком.) 
+             *Потім заповніть середній рядок масиву, середній стовпець масиву, головну діагональ 
+             *і бічну діагональ символами "*". В результаті одиниці в масиві повинні сформувати зображення зірочки. 
+             *Виведіть отриманий масив на екран, відокремлюючи елементи масиву пробілами.*/
+            int n = 3;
+            string[,] arr2 = new string[n, n];
+            for (int i = 0; i < n; i++) // Filling array
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    arr2[i,j] = ".";
+                }
+            }
+            PrintArray(arr2);
+
+            for (int j = 0; j < n; j++) // Middle row
+            {
+                arr2[1,j] = "*";
+            }
+            PrintArray(arr2);
+            ResetArray(arr2);
+
+            for (int i = 0; i < n; i++) // Middle col
+            {
+                arr2[i,1] = "*";
+            }
+            PrintArray(arr2);
+            ResetArray(arr2);
+
+            for (int i = 0; i < n; i++) // Main diagonal
+            {
+                for (int j = 0;j < n; j++)
+                {
+                    if (i == j)
+                    {
+                        arr2[i,j] = "*";
+                    }
+                }
+            }
+            PrintArray(arr2);
+            ResetArray(arr2);
+
+            for (int i = n-1, j = 0; i >= 0; i--) // Secondary diagonal
+            {
+                arr2[i, j] = "*";
+                j++;
+            }
+            PrintArray(arr2);
+            ResetArray(arr2);
+
+            // Task 7
+            /*Задано квадратний масив. Поміняйте місцями елементи по головній і бічній діагоналі, 
+             *причому кожен елемент повинен залишитися в одній колонці
+             *(тобто в кожному стовпці потрібно міняти місцями елементи по головній діагоналі і по бічній діагоналі).*/
+            n = 3;
+            int[,] arr3 = new int[n, n];
+            for (int i = 0, counter = 1;i < n; i++) // Filling array
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    arr3[i, j] = counter;
+                    counter++;
+                }
+            }
+            PrintArray(arr3);
+            Console.WriteLine();
+
+            int temp;
+            for (int i = 0, counter = 1; i < n; i++) // Swapping columns on main and secondary diagonals
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i==j)
+                    {
+                        SwapTwoPositions(arr3, i, j, n-counter, j);
+                        counter++;
+                    }
+                }
+            }
+            PrintArray(arr3);
+            Console.WriteLine();
+
+            // Task 8
+            /*Заданий прямокутний масив розміром n x m. 
+             *Поверніть його на 90 градусів за годинниковою стрілкою,
+             *записавши результат в новий масив розміром m x n.*/
+            n = 3;
+            int m = 4;
+            int[,] arr4 = new int[n, m];
+            for (int i = 0, counter = 1; i < n; i++) // Filling array
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    arr4[i, j] = counter;
+                    counter++;
+                }
+            }
+            PrintArray(arr4);
 
 
         }
@@ -163,18 +264,48 @@ namespace Hometask7
             }
         }
 
-        static void PrintArray(int[,] array) 
+        static void PrintArray(int[,] array)
         {
             for (int i = 0; i < array.GetLength(0); i++)
             {
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
-                    Console.Write(array[i,j] + " ");
+                    Console.Write(array[i, j] + " ");
                 }
                 Console.WriteLine();
             }
         }
 
+        static void PrintArray(string[,] array)
+        {
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    Console.Write(array[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
+        static void ResetArray(string[,] array)
+        {
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    array[i, j] = ".";
+                }
+            }
+        }
+
+        static void SwapTwoPositions(int[,] array, int row1, int col1, int row2, int col2)
+        {
+            int temp = array[row1, col1];
+            array[row1, col1] = array[row2, col2];
+            array[row2, col2] = temp;
+        }
 
 
     }
